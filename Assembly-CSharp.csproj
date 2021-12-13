@@ -53,9 +53,13 @@
     <UnityVersion>2020.3.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\InteractUI.cs" />
-    <Compile Include="Assets\Scripts\UIButton.cs" />
     <Compile Include="Assets\Scripts\ColorButton.cs" />
+    <Compile Include="Assets\Scripts\UIButton.cs" />
+    <Compile Include="Assets\Scripts\InteractUI.cs" />
+    <Compile Include="Assets\Scripts\StopWatch.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\ColorData.cs" />
+    <Compile Include="Assets\Scripts\ColorDataList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

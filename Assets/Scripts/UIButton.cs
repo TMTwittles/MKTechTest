@@ -1,16 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UIButton : MonoBehaviour
 {
-    [Header("Color button")]
-    public ColorButton colorButton; // Assign publicly to each button, this is a bad solution needs to be changed later.
+    [SerializeField] private UnityEvent buttonPressedEvent;
+    private Text buttonText;
 
-    // TODO: Needs to change, make a solution where each button is not responsible for changing the color.
+    public void Start()
+    {
+        buttonText = GetComponent<Text>();
+    }
+
     public void Press()
     {
-        colorButton.ChangeText();
+        buttonPressedEvent.Invoke();
+    }
+
+    public void ChangeButtonVisual(String newColorName, Color newColor)
+    {
+        buttonText.text = newColorName;
+        buttonText.color = new Color(newColor.r, newColor.g, newColor.b);
     }
 }
 
