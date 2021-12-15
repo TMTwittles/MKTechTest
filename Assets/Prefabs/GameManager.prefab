@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7323550589912568457}
   - component: {fileID: 7323550589912568462}
-  - component: {fileID: 7323550589912568456}
-  - component: {fileID: -188275284075734090}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,31 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a09ba8d53cb044b13fe817217a9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7323550589912568456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323550589912568463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8230df73273b816409b6441df6f0f83a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textUI: {fileID: 0}
---- !u!114 &-188275284075734090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323550589912568463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30824e6240055f44794c9cd04fe46d2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentText: {fileID: 0}
-  colors: []
-  colorTexts: []
+  gameMenu: {fileID: 3962021746414869245, guid: 8551693a954f302409a227a4e6b5a7e3, type: 3}
+  resultsMenu: {fileID: 3962021746414869245, guid: 5c620f33f02e2be4bbf49807be4bab24, type: 3}

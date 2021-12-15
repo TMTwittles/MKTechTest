@@ -3,19 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.UI;
 
 public class StopWatch : MonoBehaviour
 {
-    [SerializeField] private Text textUI; // Stopwatch UI, this is placeholder
     private bool active;
     private float timeOffset; // Offset for Time.time to reach 0.0f;
     private float elapsedTime = 0.0f;
-    
+
+    public float ElapsedTime
+    {
+        get { return elapsedTime; }
+    }
+
     public void TurnOn()
     {
         timeOffset = Time.time;
         active = true;
+    }
+
+    public void TurnOff()
+    {
+        elapsedTime = 0.0f;
+        timeOffset = 0.0f;
+        active = false;
     }
 
     void Update()
@@ -23,9 +35,11 @@ public class StopWatch : MonoBehaviour
         if (active)
         {
             elapsedTime = Time.time - timeOffset;
-
-            // TODO: Create a new class to update stopwatch UI, StopWatch class should only worry about time, not UI
-            textUI.text = TimeSpan.FromSeconds(elapsedTime).ToString(@"ss\:ff");
         }
+    }
+
+    public string GetTimeFormatted()
+    {
+        return TimeSpan.FromSeconds(elapsedTime).ToString(@"ss\:ff");
     }
 }
