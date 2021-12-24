@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Blue
   m_EditorClassIdentifier: 
   colorName: Blue
-  colorRGB: {r: 0, g: 0.093925476, b: 1, a: 0}
+  colorRGB: {r: 0.3476326, g: 0.38949803, b: 0.7924528, a: 0}

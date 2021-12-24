@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a09ba8d53cb044b13fe817217a9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMenu: {fileID: 3962021746414869245, guid: 8551693a954f302409a227a4e6b5a7e3, type: 3}
-  resultsMenu: {fileID: 3962021746414869245, guid: 5c620f33f02e2be4bbf49807be4bab24, type: 3}
+  canvasController: {fileID: 6910423685834097192, guid: 2d510bd31c178684692df69ed6fb9a81, type: 3}
+  gameCamera: {fileID: 0}
+  backgroundColorData: {fileID: 11400000, guid: 4f0dcb1a66662a940bb58541b31cb59a, type: 2}
+  visualRandomColors: {fileID: 11400000, guid: 2487534b8924b234181e44ce3aa48fd3, type: 2}
