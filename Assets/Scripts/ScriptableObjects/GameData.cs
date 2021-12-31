@@ -15,4 +15,47 @@ public class GameData : ScriptableObject
             return totalAttempts;
         }
     }
+
+    [SerializeField] private RandomColors defaultRandomColors;
+
+    public RandomColors DefaultRandomColors
+    {
+        get
+        {
+            return defaultRandomColors;
+        }
+    }
+
+    [SerializeField] private RandomColors customRandomColors;
+
+    public RandomColors CustomRandomColors
+    {
+        get
+        {
+            return customRandomColors;
+        }
+    }
+
+    [SerializeField] private bool enableDynamicBackground;
+
+    public bool EnableDynamicBackground
+    {
+        get
+        {
+            return enableDynamicBackground;
+        }
+        set
+        {
+            enableDynamicBackground = value;
+        }
+    }
+
+    public void InitializeCustomRandomColors()
+    {
+        foreach (ColorData colorData in customRandomColors.ColorList)
+        {
+            colorData.InitializeColorRGB();
+        }
+    }
+
 }

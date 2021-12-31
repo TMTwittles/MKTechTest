@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class StopWatch : MonoBehaviour
 {
     private bool active;
+    private bool paused = false;
     private float timeOffset; // Offset for Time.time to reach 0.0f;
     private float elapsedTime = 0.0f;
 
@@ -19,15 +20,24 @@ public class StopWatch : MonoBehaviour
 
     public void TurnOn()
     {
-        timeOffset = Time.time;
+        if (!paused)
+            timeOffset = Time.time;
+        paused = false;
         active = true;
     }
 
-    public void TurnOff()
+    public void Reset()
     {
         elapsedTime = 0.0f;
         timeOffset = 0.0f;
         active = false;
+        paused = false;
+    }
+
+    public void Pause()
+    {
+        active = false;
+        paused = true;
     }
 
     void Update()

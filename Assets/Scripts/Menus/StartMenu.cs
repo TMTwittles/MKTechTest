@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class StartMenu : ColoredMenu
 {
     [Header("UI Elements")]
-    [SerializeField] private Button NewGameButton;
+    [SerializeField] private Button newGameButton;
+    [SerializeField] private Button accessibilityButton;
+    [SerializeField] private Button quitButton;
 
     private String FormattedTime(float timeValue)
     {
@@ -17,18 +19,29 @@ public class StartMenu : ColoredMenu
 
     private void Awake()
     {
-        NewGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
+        newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
+        accessibilityButton.onClick.AddListener(delegate { OnPressAccessibility(); });
+        quitButton.onClick.AddListener(delegate {OnPressQuit();});
         InitializeColorGroups();
     }
 
     void OnEnable()
     {
-        UpdateColors();
+        UpdateColorGroupsRandomly();
     }
 
     void OnPressNewGame()
     {
-        ResetVisualRandomColors();
-        GameManager.Instance.NewGame();
+        GameManager.Instance.NewGame(true);
+    }
+
+    void OnPressAccessibility()
+    {
+        GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
+    }
+
+    void OnPressQuit()
+    {
+        GameManager.Instance.Quit();
     }
 }

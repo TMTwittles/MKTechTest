@@ -15,7 +15,7 @@ public class ColoredMenu : Menu
 
     /// <summary>
     /// Initializes the color groups, this should be called in Awake() or before
-    /// calling UpdateColors().
+    /// calling UpdateColorGroupsRandomly().
     /// </summary>
     protected void InitializeColorGroups()
     {
@@ -25,24 +25,34 @@ public class ColoredMenu : Menu
         colorGroups.Add(colorGroup03);
         colorGroups.Add(colorGroup04);
         colorGroups.Add(colorGroup05);
+
+        for (int i = 0; i < colorGroups.Count; i++)
+        {
+            if (colorGroups[i].Count == 0)
+                colorGroups.RemoveAt(i);
+        }
     }
 
     /// <summary>
-    /// Updates the colors randomly based on the conditions set in visual random colors
-    /// and the text assigned in the respective color groups.
+    /// Updates the color groups to random colors.
     /// </summary>
-    protected void UpdateColors()
+    protected void UpdateColorGroupsRandomly()
     {
+        ResetRandomColors();
+
         ColorData colorData = null;
         foreach (List<Text> texts in colorGroups)
         {
-            colorData = visualRandomColors.GetRandomColor();
-            visualRandomColors.IgnoreColor(colorData.ColorName);
+            colorData = data.CustomRandomColors.GetRandomColor();
+            data.CustomRandomColors.IgnoreColor(colorData.ColorName);
             foreach (Text text in texts)
             {
-                text.color = Helper.GenColor(colorData.ColorRGB);
+                text.color = colorData.ColorRGB;
             }
         }
+
+        ResetRandomColors(); // Reset random colors back to normal once finished
     }
+
 }
 

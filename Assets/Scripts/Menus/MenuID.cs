@@ -6,6 +6,8 @@ public enum MenuID
 {
     StartMenu,
     GameMenu,
+    PauseMenu,
+    AccessibilityMenu,
     ResultsMenu
 }
 

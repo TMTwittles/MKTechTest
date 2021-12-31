@@ -11,7 +11,9 @@ public class ResultsMenu : ColoredMenu
     [SerializeField] private Text numFailedAttempts;
     [SerializeField] private Text numAverageAttemptTime;
     [SerializeField] private Text numTotalTime;
-    [SerializeField] private Button NewGameButton;
+    [SerializeField] private Button newGameButton;
+    [SerializeField] private Button accessibilityButton;
+    [SerializeField] private Button quitButton;
     
     [Header("Game Data")]
     [SerializeField] private PlayerData playerData;
@@ -23,14 +25,16 @@ public class ResultsMenu : ColoredMenu
 
     void Awake()
     {
-        NewGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
+        newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
+        accessibilityButton.onClick.AddListener(delegate{OnPressAccessibility();});
+        quitButton.onClick.AddListener(delegate{OnPressQuit();});
         InitializeColorGroups();
     }
 
     void OnEnable()
     {
         UpdateResults();
-        UpdateColors();
+        UpdateColorGroupsRandomly();
     }
 
     // Results are update based off player data
@@ -44,8 +48,16 @@ public class ResultsMenu : ColoredMenu
 
     void OnPressNewGame()
     {
-        ResetVisualRandomColors();
-        playerData.ResetResults();
-        GameManager.Instance.NewGame();
+        GameManager.Instance.NewGame(true);
+    }
+
+    void OnPressAccessibility()
+    {
+        GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
+    }
+
+    void OnPressQuit()
+    {
+        GameManager.Instance.Quit();
     }
 }

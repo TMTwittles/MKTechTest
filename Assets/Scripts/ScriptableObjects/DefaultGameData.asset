@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: DefaultGameData
   m_EditorClassIdentifier: 
   totalAttempts: 5
+  defaultRandomColors: {fileID: 11400000, guid: 2487534b8924b234181e44ce3aa48fd3, type: 2}
+  customRandomColors: {fileID: 11400000, guid: e1e5d58d8af1f714f98a0f85f2ee26c1, type: 2}

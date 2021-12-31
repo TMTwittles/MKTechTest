@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[CreateAssetMenu(fileName = "New Color data list", menuName = "Color Data List")]
+[CreateAssetMenu(fileName = "New Random Colors", menuName = "Random Colors")]
 public class RandomColors : ScriptableObject
 {
     enum ColorArray
@@ -15,13 +15,15 @@ public class RandomColors : ScriptableObject
 
 
     [SerializeField] private List<ColorData> colorList;
-    private ColorData[] colorArray;
+    private Dictionary<string, ColorData> colorDictionary;
+    private string[] colorArray;
     private int numColors = 0;
     private int lastIndex = 0; // Last index where a colour was placed, it will be reset to 0 if shuffle = false
 
     public List<ColorData> ColorList
     {
         get { return colorList; }
+        set { colorList = value; }
     }
 
     public int NumColors
@@ -38,17 +40,27 @@ public class RandomColors : ScriptableObject
     {
         numColors = colorList.Count;
 
-        colorArray = new ColorData[numColors];
+        colorArray = new String[numColors];
 
         for (int i = 0; i < numColors; i++)
         {
-            colorArray[i] = colorList[i];
+            colorArray[i] = colorList[i].ColorName;
+        }
+    }
+
+    private void GenerateDictionary()
+    {
+        colorDictionary = new Dictionary<string, ColorData>();
+
+        foreach (ColorData colorData in ColorList)
+        {
+            colorDictionary.Add(colorData.ColorName, colorData);
         }
     }
 
     private void Swap(int i, int j)
     {
-        ColorData temp = colorArray[i];
+        string temp = colorArray[i];
         colorArray[i] = colorArray[j];
         colorArray[j] = temp;
     }
@@ -60,6 +72,20 @@ public class RandomColors : ScriptableObject
             int randomIndex = Random.Range(0, numColors);
             Swap(i, randomIndex);
         }
+    }
+
+    /// <summary>
+    /// Modifies RGB color values of a specific color
+    /// </summary>
+    /// <param name="colorName"> String value, name of color to change </param>
+    /// /// <param name="colorRGB"> Color value, color value to change color to </param>
+    /// <returns> Color data of the specified color. </returns>
+    public void SetColorData(string colorName, Color colorRGB)
+    {
+        if (colorDictionary == null)
+            GenerateDictionary();
+
+        colorDictionary[colorName].SetColorRGB(colorRGB);
     }
 
     /// <summary>
@@ -81,16 +107,10 @@ public class RandomColors : ScriptableObject
     /// <returns> Color data of the specified color. </returns>
     public ColorData GetColorData(string colorName)
     {
-        if (numColors == 0)
-            GenerateArray();
+        if (colorDictionary == null)
+            GenerateDictionary();
 
-        foreach (ColorData color in ColorList)
-        {
-            if (color.ColorName == colorName)
-                return color;
-        }
-
-        return null;
+        return colorDictionary[colorName];
     }
 
     /// <summary>
@@ -106,7 +126,7 @@ public class RandomColors : ScriptableObject
 
         for (int i = 0; i < numColors; i++)
         {
-            if (colorArray[i].ColorName == colorName)
+            if (colorArray[i] == colorName)
             {
                 Swap(i, lastIndex);
                 break;
@@ -124,7 +144,12 @@ public class RandomColors : ScriptableObject
     {
         if (numColors == 0)
             GenerateArray();
+        
+        if (colorDictionary == null) 
+            GenerateDictionary();
+        
 
-        return colorArray[Random.Range(lastIndex, numColors)];
+        string randomColorName = colorArray[Random.Range(lastIndex, numColors)];
+        return colorDictionary[randomColorName];
     }
 }

@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasController: {fileID: 6910423685834097192, guid: 2d510bd31c178684692df69ed6fb9a81, type: 3}
   gameCamera: {fileID: 0}
-  backgroundColorData: {fileID: 11400000, guid: 4f0dcb1a66662a940bb58541b31cb59a, type: 2}
-  visualRandomColors: {fileID: 11400000, guid: 2487534b8924b234181e44ce3aa48fd3, type: 2}
+  backgroundColorData: {fileID: 11400000, guid: 2e46a3eabf31cef4089e6fcce43b5bd8, type: 2}
+  data: {fileID: 11400000, guid: 861cda9cf1d2b7540b197a11fcb0b36e, type: 2}

@@ -11,6 +11,7 @@ public class CanvasController : MonoBehaviour
     private GameObject[] menusInstantiated;
     private GameObject[] menusInitial;
     private MenuID activeMenuID;
+    private MenuID previousMenuID;
 
     void Awake()
     {
@@ -39,6 +40,14 @@ public class CanvasController : MonoBehaviour
                 menusInitial[(int)MenuID.GameMenu] = menu.gameObject;
                 break;
 
+            case MenuID.PauseMenu:
+                menusInitial[(int)MenuID.PauseMenu] = menu.gameObject;
+                break;
+
+            case MenuID.AccessibilityMenu:
+                menusInitial[(int)MenuID.AccessibilityMenu] = menu.gameObject;
+                break;
+
             case MenuID.ResultsMenu:
                 menusInitial[(int)MenuID.ResultsMenu] = menu.gameObject;
                 break;
@@ -54,6 +63,7 @@ public class CanvasController : MonoBehaviour
         if (menusInstantiated[(int) menuID] == null)
         {
             menusInstantiated[(int) menuID] = Instantiate(menusInitial[(int) menuID], transform); // Store newly created game object
+            previousMenuID = activeMenuID;
             activeMenuID = menuID;
         }
         else
@@ -88,6 +98,7 @@ public class CanvasController : MonoBehaviour
         if (menusInstantiated[(int) menuID] != null)
         {
             menusInstantiated[(int) menuID].SetActive(true);
+            previousMenuID = activeMenuID;
             activeMenuID = menuID;
         }
         else
@@ -128,6 +139,15 @@ public class CanvasController : MonoBehaviour
     public MenuID GetActiveMenuID()
     {
         return activeMenuID;
+    }
+
+    /// <summary>
+    /// Get the previously active menu ID
+    /// </summary>
+    /// <returns>Enum menu ID of the previous menu </returns>
+    public MenuID GetPreviousMenuID()
+    {
+        return previousMenuID;
     }
 
     /// <summary>

@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{71A82F22-7929-1C39-54B8-B05454B24CDD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -66,7 +65,8 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\PlayerData.cs" />
     <Compile Include="Assets\Scripts\StopWatch.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />
-    <Compile Include="Assets\Scripts\Helper.cs" />
+    <Compile Include="Assets\Scripts\Menus\AccessibilityMenu.cs" />
+    <Compile Include="Assets\Scripts\Menus\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\GameMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\ColoredMenu.cs" />
   </ItemGroup>

@@ -10,10 +10,11 @@ using Random = UnityEngine.Random;
 
 public class GameMenu : Menu
 {
-    [Header("UI")]
+    [Header("UI Elements")]
     [SerializeField] private Text timerText;
     [SerializeField] private Text displayText;
     [SerializeField] private List<GameObject> optionButtons;
+    [SerializeField] private Button pauseButton;
     private Text[] optionButtonTexts; // Faster access to option button text
 
     [Header("Game Data")] 
@@ -26,6 +27,8 @@ public class GameMenu : Menu
 
     void Awake()
     {
+        pauseButton.onClick.AddListener(delegate {OnPressPause();});
+        
         stopWatch = GetComponent<StopWatch>();
         optionButtonTexts = new Text[optionButtons.Count];
         int iter = 0;
@@ -39,11 +42,16 @@ public class GameMenu : Menu
 
     void OnEnable()
     {
+        stopWatch.TurnOn();
+    }
+
+    public override void Reset()
+    {
         playerData.ResetResults();
+        stopWatch.Reset();
         stopWatch.TurnOn();
         randomColorsTextOnly.Reset();
-        visualRandomColors.Reset();
-        visualRandomColors.IgnoreColor(GameManager.Instance.BackgroundColorData.ColorName);
+        ResetRandomColors();
         Shuffle();
     }
 
@@ -52,16 +60,29 @@ public class GameMenu : Menu
         timerText.text = stopWatch.GetTimeFormatted();
     }
 
+    private void OnPressPause()
+    {
+        stopWatch.Pause();
+        GameManager.Instance.SetActiveMenu(MenuID.PauseMenu, false);
+    }
+
     // Method determines if the player selected the right color
     private void OptionButtonPressed(string selectedColor)
     {
         successfulAttempt = selectedColor == correctColor;
 
-        visualRandomColors.Reset(); // Reset all visual colors
-        visualRandomColors.IgnoreColor(selectedColor); // Ignore the color selected by the player as this will be the background color
-        GameManager.Instance.UpdateBackgroundColor(visualRandomColors.GetColorData(selectedColor));
-
-        if (playerData.NumAttempts >= gameData.TotalAttempts)
+        if (data.EnableDynamicBackground)
+        {
+            data.CustomRandomColors.Reset(); // Reset all visual colors
+            data.CustomRandomColors.IgnoreColor(selectedColor); // Ignore the color selected by the player as this will be the background color
+            GameManager.Instance.UpdateBackgroundColor(data.CustomRandomColors.GetColorData(selectedColor));
+        }
+        else
+        {
+            ResetRandomColors();
+        }
+        
+        if (playerData.NumAttempts >= gameData.TotalAttempts - 1)
         {
             playerData.AddAttempt(successfulAttempt, stopWatch.ElapsedTime);
             GameManager.Instance.ShowResults();
@@ -81,7 +102,7 @@ public class GameMenu : Menu
 
         // Ignore the correct color from all random color options
         randomColorsTextOnly.IgnoreColor(correctColor); 
-        visualRandomColors.IgnoreColor(correctColor);
+        data.CustomRandomColors.IgnoreColor(correctColor);
 
         string randomName = "";
         ColorData randomColorData = null;
@@ -90,10 +111,10 @@ public class GameMenu : Menu
 
         // Apply values to the display button
         displayText.text = correctColor;
-        randomColorData = visualRandomColors.GetRandomColor();
-        displayText.color = Helper.GenColor(randomColorData.ColorRGB);
+        randomColorData = data.CustomRandomColors.GetRandomColor();
+        displayText.color = randomColorData.ColorRGB;
 
-        visualRandomColors.IgnoreColor(randomColorData.ColorName);
+        data.CustomRandomColors.IgnoreColor(randomColorData.ColorName);
         
         // Apply new options to each option button in the menu
         foreach (Text optionButton in optionButtonTexts)
@@ -110,15 +131,16 @@ public class GameMenu : Menu
             }
 
             // Apply a random color from the pool of remaining visual colors
-            randomColorData = visualRandomColors.GetRandomColor();
-            visualRandomColors.IgnoreColor(randomColorData.ColorName);
-            optionButton.color = Helper.GenColor(randomColorData.ColorRGB);
+            randomColorData = data.CustomRandomColors.GetRandomColor();
+            data.CustomRandomColors.IgnoreColor(randomColorData.ColorName);
+            optionButton.color = randomColorData.ColorRGB;
 
             iter += 1;
         }
         
         // Once option buttons have been assigned, apply a random remaining color to the timer text
-        timerText.color = Helper.GenColor(visualRandomColors.GetRandomColor().ColorRGB);
+        timerText.color = data.CustomRandomColors.GetRandomColor().ColorRGB;
+        pauseButton.gameObject.GetComponent<Text>().color = data.CustomRandomColors.GetRandomColor().ColorRGB;
     }
 
     
