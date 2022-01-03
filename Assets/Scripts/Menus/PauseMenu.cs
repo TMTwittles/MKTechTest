@@ -1,47 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : ColoredMenu
+namespace MKTechTest.Assets.Scripts.Menus
 {
-    [Header("UI Elements")] 
-    [SerializeField] private Button resumeButton;
-    [SerializeField] private Button retryButton;
-    [SerializeField] private Button accessibilityButton;
-    [SerializeField] private Button quitButton;
-
-    void Awake()
+    public class PauseMenu : ColoredMenu
     {
-        resumeButton.onClick.AddListener(delegate {OnPressResume();});
-        retryButton.onClick.AddListener(delegate {OnPressRetry();});
-        accessibilityButton.onClick.AddListener(delegate{OnPressAccessibility();});
-        InitializeColorGroups();
-    }
+        [Header("UI Elements")] 
+        [SerializeField] private Button resumeButton;
+        [SerializeField] private Button retryButton;
+        [SerializeField] private Button accessibilityButton;
+        [SerializeField] private Button quitButton;
 
-    void OnEnable()
-    {
-        ResetRandomColors();
-        UpdateColorGroupsRandomly();
-    }
+        private void Awake()
+        {
+            resumeButton.onClick.AddListener(delegate {OnPressResume();});
+            retryButton.onClick.AddListener(delegate {OnPressRetry();});
+            accessibilityButton.onClick.AddListener(delegate{OnPressAccessibility();});
+            InitializeColorGroups();
+        }
 
-    void OnPressResume()
-    {
-        GameManager.Instance.SetActiveMenu(MenuID.GameMenu, true);
-    }
+        private void OnEnable()
+        {
+            Reset();
+        }
 
-    void OnPressRetry()
-    {
-        GameManager.Instance.NewGame(true);
-    }
+        public override void Reset()
+        {
+            ResetRandomColors();
+            UpdateColorGroupsRandomly();
+        }
 
-    void OnPressAccessibility()
-    {
-        GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
-    }
+        private void OnPressResume()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.GameMenu, true);
+        }
 
-    void OnPressQuit()
-    {
-        GameManager.Instance.Quit();
+        private void OnPressRetry()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.GameMenu, true);
+            GameManager.Instance.ResetActiveMenu();
+        }
+
+        private void OnPressAccessibility()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
+        }
+
+        private void OnPressQuit()
+        {
+            GameManager.Instance.Quit();
+        }
     }
 }

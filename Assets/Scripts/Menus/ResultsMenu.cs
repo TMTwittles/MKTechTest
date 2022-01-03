@@ -1,63 +1,78 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using MKTechTest.Assets.Scripts.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultsMenu : ColoredMenu
+namespace MKTechTest.Assets.Scripts.Menus
 {
-    [Header("UI Elements")]
-    [SerializeField] private Text numSuccessfulAttempts;
-    [SerializeField] private Text numFailedAttempts;
-    [SerializeField] private Text numAverageAttemptTime;
-    [SerializeField] private Text numTotalTime;
-    [SerializeField] private Button newGameButton;
-    [SerializeField] private Button accessibilityButton;
-    [SerializeField] private Button quitButton;
+    public class ResultsMenu : ColoredMenu
+    {
+        [Header("UI Elements")]
+        [SerializeField] private Text numSuccessfulAttempts;
+        [SerializeField] private Text numFailedAttempts;
+        [SerializeField] private Text averageAttemptTime;
+        [SerializeField] private Text totalTime;
+        [SerializeField] private Button newGameButton;
+        [SerializeField] private Button accessibilityButton;
+        [SerializeField] private Button quitButton;
     
-    [Header("Game Data")]
-    [SerializeField] private PlayerData playerData;
+        [Header("Game Data")]
+        [SerializeField] private PlayerData playerData;
 
-    private String FormattedTime(float timeValue)
-    {
-        return TimeSpan.FromSeconds(timeValue).ToString(@"ss\:ff");
-    }
+        private String FormattedTime(float timeValue)
+        {
+            return TimeSpan.FromSeconds(timeValue).ToString(@"ss\:ff");
+        }
 
-    void Awake()
-    {
-        newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
-        accessibilityButton.onClick.AddListener(delegate{OnPressAccessibility();});
-        quitButton.onClick.AddListener(delegate{OnPressQuit();});
-        InitializeColorGroups();
-    }
+        private void Awake()
+        {
+            newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
+            accessibilityButton.onClick.AddListener(delegate{OnPressAccessibility();});
+            quitButton.onClick.AddListener(delegate{OnPressQuit();});
+            InitializeColorGroups();
+        }
 
-    void OnEnable()
-    {
-        UpdateResults();
-        UpdateColorGroupsRandomly();
-    }
+        private void OnEnable()
+        {
+            Reset();
+        }
 
-    // Results are update based off player data
-    void UpdateResults()
-    {
-        numSuccessfulAttempts.text = playerData.SuccessfulAttempts.ToString();
-        numFailedAttempts.text = playerData.FailedAttempts.ToString();
-        numAverageAttemptTime.text = FormattedTime(playerData.TotalTime / playerData.NumAttempts);
-        numTotalTime.text = FormattedTime(playerData.TotalTime);
-    }
+        public override void Reset()
+        {
+            UpdateResults();
+            UpdateColorGroupsRandomly();
+        }
 
-    void OnPressNewGame()
-    {
-        GameManager.Instance.NewGame(true);
-    }
+        // Results are update based off player data
+        private void UpdateResults()
+        {
+            numSuccessfulAttempts.text = playerData.SuccessfulAttempts.ToString();
+            numFailedAttempts.text = playerData.FailedAttempts.ToString();
+            if (playerData.TotalTime > 0.0f)
+            {
+                averageAttemptTime.text = FormattedTime(playerData.TotalTime / playerData.NumAttempts);
+            }
+            else
+            {
+                averageAttemptTime.text = FormattedTime(0.0f);
+            }
+            totalTime.text = FormattedTime(playerData.TotalTime);
+        }
 
-    void OnPressAccessibility()
-    {
-        GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
-    }
+        private void OnPressNewGame()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.GameMenu, true);
+            GameManager.Instance.ResetActiveMenu();
+        }
 
-    void OnPressQuit()
-    {
-        GameManager.Instance.Quit();
+        private void OnPressAccessibility()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
+        }
+
+        private void OnPressQuit()
+        {
+            GameManager.Instance.Quit();
+        }
     }
 }

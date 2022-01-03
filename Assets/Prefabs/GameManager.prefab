@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasController: {fileID: 6910423685834097192, guid: 2d510bd31c178684692df69ed6fb9a81, type: 3}
   gameCamera: {fileID: 0}
-  backgroundColorData: {fileID: 11400000, guid: 2e46a3eabf31cef4089e6fcce43b5bd8, type: 2}
   data: {fileID: 11400000, guid: 861cda9cf1d2b7540b197a11fcb0b36e, type: 2}
+  playerData: {fileID: 11400000, guid: 3bc99bac21d0b9349a4fa916db9ab5e6, type: 2}

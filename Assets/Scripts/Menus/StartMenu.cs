@@ -1,47 +1,52 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Transactions;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartMenu : ColoredMenu
+namespace MKTechTest.Assets.Scripts.Menus
 {
-    [Header("UI Elements")]
-    [SerializeField] private Button newGameButton;
-    [SerializeField] private Button accessibilityButton;
-    [SerializeField] private Button quitButton;
-
-    private String FormattedTime(float timeValue)
+    public class StartMenu : ColoredMenu
     {
-        return TimeSpan.FromSeconds(timeValue).ToString(@"ss\:ff");
-    }
+        [Header("UI Elements")]
+        [SerializeField] private Button newGameButton;
+        [SerializeField] private Button accessibilityButton;
+        [SerializeField] private Button quitButton;
 
-    private void Awake()
-    {
-        newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
-        accessibilityButton.onClick.AddListener(delegate { OnPressAccessibility(); });
-        quitButton.onClick.AddListener(delegate {OnPressQuit();});
-        InitializeColorGroups();
-    }
+        private String FormattedTime(float timeValue)
+        {
+            return TimeSpan.FromSeconds(timeValue).ToString(@"ss\:ff");
+        }
 
-    void OnEnable()
-    {
-        UpdateColorGroupsRandomly();
-    }
+        private void Awake()
+        {
+            newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
+            accessibilityButton.onClick.AddListener(delegate { OnPressAccessibility(); });
+            quitButton.onClick.AddListener(delegate {OnPressQuit();});
+            InitializeColorGroups();
+        }
 
-    void OnPressNewGame()
-    {
-        GameManager.Instance.NewGame(true);
-    }
+        private void OnEnable()
+        {
+            Reset();
+        }
 
-    void OnPressAccessibility()
-    {
-        GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
-    }
+        public override void Reset()
+        {
+            UpdateColorGroupsRandomly();
+        }
 
-    void OnPressQuit()
-    {
-        GameManager.Instance.Quit();
+        private void OnPressNewGame()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.GameMenu, true);
+        }
+
+        private void OnPressAccessibility()
+        {
+            GameManager.Instance.SetActiveMenu(MenuID.AccessibilityMenu, false);
+        }
+
+        private void OnPressQuit()
+        {
+            GameManager.Instance.Quit();
+        }
     }
 }

@@ -236,8 +236,8 @@ MonoBehaviour:
   - {fileID: 7946028521577193034}
   numSuccessfulAttempts: {fileID: 4260949841515596575}
   numFailedAttempts: {fileID: 657901424368059463}
-  numAverageAttemptTime: {fileID: 5933279790309414949}
-  numTotalTime: {fileID: 6808959596645896749}
+  averageAttemptTime: {fileID: 5933279790309414949}
+  totalTime: {fileID: 6808959596645896749}
   newGameButton: {fileID: 738618486573408747}
   accessibilityButton: {fileID: 8084841129901848797}
   quitButton: {fileID: 6764604509026499432}

@@ -1,136 +1,153 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+using MKTechTest.Assets.Scripts.Menus;
+using MKTechTest.Assets.Scripts.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
-using UnityEngine.XR;
-using Random = UnityEngine.Random;
+using Menu = MKTechTest.Assets.Scripts.Menus.Menu;
 
-public class GameManager : MonoBehaviour
+namespace MKTechTest.Assets.Scripts
 {
-
-    private static GameManager instance; // static singleton instance
-
-    public static GameManager Instance
+    public class GameManager : MonoBehaviour
     {
-        get
+        private static GameManager instance; // static singleton instance
+
+        public static GameManager Instance
         {
-            return instance;
+            get
+            {
+                return instance;
+            }
         }
-    }
 
-    [Header("Menus")] 
-    [SerializeField] private CanvasController canvasController;
+        [Header("Menus")] 
+        [SerializeField] private CanvasController canvasController;
 
-    [Header("Camera")] 
-    [SerializeField] private Camera gameCamera;
-    private ColorData backgroundColorData;
+        [Header("Camera")] 
+        [SerializeField] private Camera gameCamera;
+        private ColorData backgroundColorData;
 
-    [Header("Game data")] 
-    [SerializeField] private GameData data;
-    public ColorData BackgroundColorData
-    {
-        get { return backgroundColorData; }
-    }
+        [Header("Game data")] 
+        [SerializeField] private GameData data;
+        [SerializeField] private PlayerData playerData;
 
-    private void Awake()
-    {
-        instance = this; // Basic singleton implementation.
-    }
-
-    private void Start()
-    {
-        data.InitializeCustomRandomColors();
-
-        // Set background color
-        backgroundColorData = data.CustomRandomColors.GetRandomColor();
-        data.CustomRandomColors.IgnoreColor(backgroundColorData.ColorName);
-        gameCamera.backgroundColor = backgroundColorData.ColorRGB;
-
-        // Instantiate start menu
-        canvasController.InstantiateMenu(MenuID.StartMenu);
-    }
-
-    public void ShowResults()
-    {
-        canvasController.DisableMenu(MenuID.GameMenu);
-
-        // Check if result menu has been instantiated, if it is then enable it else instantiate it.
-        if (canvasController.IsMenuInstantiated(MenuID.ResultsMenu))
+        public PlayerData PlayerData
         {
-            canvasController.EnableMenu(MenuID.ResultsMenu);
+            get { return playerData; }
         }
-        else
+
+        public GameData GameData
         {
-            canvasController.InstantiateMenu(MenuID.ResultsMenu);
+            get { return data; }
         }
-    }
 
-    private void HandleActiveMenu(bool destroyActiveMenu)
-    {
-        if (destroyActiveMenu)
-            canvasController.DestroyMenu(canvasController.GetActiveMenuID());
-        else
-            canvasController.DisableMenu(canvasController.GetActiveMenuID());
-    }
+        public ColorData BackgroundColorData
+        {
+            get { return backgroundColorData; }
+        }
 
-    /// <summary>
-    /// Instantiates or enables a chosen menu, destroying or deleting the active menu.
-    /// </summary>
-    /// <param name="newActiveMenuID"> Enum MenuID, ID of the menu to set active </param>
-    /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
-    public void SetActiveMenu(MenuID newActiveMenuID, bool destroyCurrentMenu)
-    {
-        HandleActiveMenu(destroyCurrentMenu);
+        private void Awake()
+        {
+            instance = this; // Basic singleton implementation.
+        }
 
-        if (canvasController.IsMenuInstantiated(newActiveMenuID))
-            canvasController.EnableMenu(newActiveMenuID);
-        else
-            canvasController.InstantiateMenu(newActiveMenuID);
-    }
+        private void Start()
+        {
+            data.InitializeCustomRandomColors();
 
-    /// <summary>
-    /// Instantiates or enables the previously active menu, destroying or deleting the active menu.
-    /// </summary>
-    /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
-    public void GoBack(bool destroyCurrentMenu)
-    {
-        HandleActiveMenu(destroyCurrentMenu);
+            // Set background color
+            backgroundColorData = data.CustomRandomColors.GetRandomColor();
+            data.CustomRandomColors.IgnoreColor(backgroundColorData.ColorName);
+            gameCamera.backgroundColor = backgroundColorData.ColorRGB;
 
-        MenuID previousMenuID = canvasController.GetPreviousMenuID();
+            // Instantiate start menu
+            canvasController.InstantiateMenu(MenuID.StartMenu);
+        }
 
-        if (canvasController.IsMenuInstantiated(previousMenuID))
-            canvasController.EnableMenu(previousMenuID);
-        else
-            canvasController.InstantiateMenu(previousMenuID);
-    }
+        public void ShowResults()
+        {
+            canvasController.DisableMenu(MenuID.GameMenu);
 
-    /// <summary>
-    /// Instantiates or enables the game menu but also resets it to ensure a new game.
-    /// </summary>
-    /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
-    public void NewGame(bool destroyCurrentMenu)
-    {
-        SetActiveMenu(MenuID.GameMenu, destroyCurrentMenu);
-        canvasController.GetActiveMenu().Reset(); // Reset results for the new game
-    }
+            // Check if result menu has been instantiated, if it is then enable it else instantiate it.
+            if (canvasController.IsMenuInstantiated(MenuID.ResultsMenu))
+            {
+                canvasController.EnableMenu(MenuID.ResultsMenu);
+            }
+            else
+            {
+                canvasController.InstantiateMenu(MenuID.ResultsMenu);
+            }
+        }
 
-    /// <summary>
-    /// Updates the background color of the camera
-    /// </summary>
-    /// <param name="newColorData">Color data of the new color to change the background color</param>
-    public void UpdateBackgroundColor(ColorData newColorData)
-    {
-        backgroundColorData = newColorData;
-        gameCamera.backgroundColor = newColorData.ColorRGB;
-    }
+        private void HandleActiveMenu(bool destroyActiveMenu)
+        {
+            if (destroyActiveMenu)
+                canvasController.DestroyMenu(canvasController.GetActiveMenuID());
+            else
+                canvasController.DisableMenu(canvasController.GetActiveMenuID());
+        }
 
-    /// <summary>
-    /// Quits the application.
-    /// </summary>
-    public void Quit()
-    {
-        Application.Quit();
+        /// <summary>
+        /// Instantiates or enables a chosen menu, destroying or deleting the active menu.
+        /// </summary>
+        /// <param name="newActiveMenuID"> Enum MenuID, ID of the menu to set active </param>
+        /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
+        public void SetActiveMenu(MenuID newActiveMenuID, bool destroyCurrentMenu)
+        {
+            HandleActiveMenu(destroyCurrentMenu);
+
+            if (canvasController.IsMenuInstantiated(newActiveMenuID))
+                canvasController.EnableMenu(newActiveMenuID);
+            else
+                canvasController.InstantiateMenu(newActiveMenuID);
+        }
+
+        /// <summary>
+        /// Resets the active menu to its initial state.
+        /// </summary>
+        public void ResetActiveMenu()
+        {
+            canvasController.GetActiveMenu().Reset();
+        }
+
+        /// <summary>
+        /// Instantiates or enables the previously active menu, destroying or deleting the active menu.
+        /// </summary>
+        /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
+        public void GoBack(bool destroyCurrentMenu)
+        {
+            HandleActiveMenu(destroyCurrentMenu);
+
+            MenuID previousMenuID = canvasController.GetPreviousMenuID();
+
+            if (canvasController.IsMenuInstantiated(previousMenuID))
+                canvasController.EnableMenu(previousMenuID);
+            else
+                canvasController.InstantiateMenu(previousMenuID);
+        }
+
+        /// <summary>
+        /// Sets the background color data of the camera
+        /// </summary>
+        /// <param name="newColorData">Color data of the new color to change the background color</param>
+        public void SetBackgroundColor(ColorData newColorData)
+        {
+            backgroundColorData = newColorData;
+            gameCamera.backgroundColor = newColorData.ColorRGB;
+        }
+
+        /// <summary>
+        /// Gets the active menu in the scene.
+        /// </summary>
+        /// <returns>Menu object, returns the active menu in the scene</returns>
+        public Menu GetActiveMenu()
+        {
+            return canvasController.GetActiveMenu();
+        }
+
+        /// <summary>
+        /// Quits the application.
+        /// </summary>
+        public void Quit()
+        {
+            Application.Quit();
+        }
     }
 }

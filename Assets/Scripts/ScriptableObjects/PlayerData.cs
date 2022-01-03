@@ -1,60 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Player Data", menuName = "Player Data")]
-public class PlayerData : ScriptableObject
+namespace MKTechTest.Assets.Scripts.ScriptableObjects
 {
-    [SerializeField] private int successfulAttempts = 0;
-
-    public int SuccessfulAttempts
+    [CreateAssetMenu(fileName = "New Player Data", menuName = "Player Data")]
+    public class PlayerData : ScriptableObject
     {
-        get { return successfulAttempts; }
-    }
+        [SerializeField] private int successfulAttempts = 0;
 
-    [SerializeField] private int failedAttempts = 0;
+        public int SuccessfulAttempts
+        {
+            get { return successfulAttempts; }
+        }
 
-    public int FailedAttempts
-    {
-        get { return failedAttempts; }
-    }
+        [SerializeField] private int failedAttempts = 0;
 
-    [SerializeField] private float totalTime = 0.0f;
+        public int FailedAttempts
+        {
+            get { return failedAttempts; }
+        }
 
-    public float TotalTime
-    {
-        get { return totalTime; }
-    }
+        [SerializeField] private float totalTime = 0.0f;
 
-    [SerializeField] private int numAttempts = 0;
+        public float TotalTime
+        {
+            get { return totalTime; }
+        }
 
-    public int NumAttempts
-    {
-        get { return numAttempts; }
-    }
+        [SerializeField] private int numAttempts = 0;
 
-    public void AddAttempt(bool success)
-    {
-        if (success)
-            successfulAttempts += 1;
-        else
-            failedAttempts += 1;
+        public int NumAttempts
+        {
+            get { return numAttempts; }
+        }
 
-        numAttempts += 1;
-    }
+        public void AddAttempt(bool success)
+        {
+            if (success)
+                successfulAttempts += 1;
+            else
+                failedAttempts += 1;
 
-    public void AddAttempt(bool success, float _totalTime)
-    {
-        AddAttempt(success);
-        totalTime = _totalTime;
-    }
+            numAttempts += 1;
+        }
 
-    public void ResetResults()
-    {
-        successfulAttempts = 0;
-        failedAttempts = 0;
-        numAttempts = 0;
-        totalTime = 0.0f;
+        public void AddAttempt(bool success, float _totalTime)
+        {
+            AddAttempt(success);
+            totalTime = _totalTime;
+        }
+
+        public void ResetResults()
+        {
+            successfulAttempts = 0;
+            failedAttempts = 0;
+            numAttempts = 0;
+            totalTime = 0.0f;
+        }
     }
 }

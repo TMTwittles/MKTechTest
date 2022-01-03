@@ -1,58 +1,66 @@
-using System.Collections;
 using System.Collections.Generic;
+using MKTechTest.Assets.Scripts.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColoredMenu : Menu
+namespace MKTechTest.Assets.Scripts.Menus
 {
-    [Header("ColorGroups")] 
-    [SerializeField] protected List<Text> colorGroup01;
-    [SerializeField] protected List<Text> colorGroup02;
-    [SerializeField] protected List<Text> colorGroup03;
-    [SerializeField] protected List<Text> colorGroup04;
-    [SerializeField] protected List<Text> colorGroup05;
-    protected List<List<Text>> colorGroups;
-
-    /// <summary>
-    /// Initializes the color groups, this should be called in Awake() or before
-    /// calling UpdateColorGroupsRandomly().
-    /// </summary>
-    protected void InitializeColorGroups()
+    public abstract class ColoredMenu : Menu
     {
-        colorGroups = new List<List<Text>>();
-        colorGroups.Add(colorGroup01);
-        colorGroups.Add(colorGroup02);
-        colorGroups.Add(colorGroup03);
-        colorGroups.Add(colorGroup04);
-        colorGroups.Add(colorGroup05);
+        [Header("ColorGroups")] 
+        [SerializeField] protected List<Text> colorGroup01;
+        [SerializeField] protected List<Text> colorGroup02;
+        [SerializeField] protected List<Text> colorGroup03;
+        [SerializeField] protected List<Text> colorGroup04;
+        [SerializeField] protected List<Text> colorGroup05;
+        protected List<List<Text>> colorGroups;
 
-        for (int i = 0; i < colorGroups.Count; i++)
+        public List<List<Text>> ColorGroups
         {
-            if (colorGroups[i].Count == 0)
-                colorGroups.RemoveAt(i);
+            get { return colorGroups; }
         }
-    }
 
-    /// <summary>
-    /// Updates the color groups to random colors.
-    /// </summary>
-    protected void UpdateColorGroupsRandomly()
-    {
-        ResetRandomColors();
-
-        ColorData colorData = null;
-        foreach (List<Text> texts in colorGroups)
+        /// <summary>
+        /// Initializes the color groups, this should be called in Awake() or before
+        /// calling UpdateColorGroupsRandomly().
+        /// </summary>
+        protected void InitializeColorGroups()
         {
-            colorData = data.CustomRandomColors.GetRandomColor();
-            data.CustomRandomColors.IgnoreColor(colorData.ColorName);
-            foreach (Text text in texts)
+            colorGroups = new List<List<Text>>();
+            colorGroups.Add(colorGroup01);
+            colorGroups.Add(colorGroup02);
+            colorGroups.Add(colorGroup03);
+            colorGroups.Add(colorGroup04);
+            colorGroups.Add(colorGroup05);
+
+            for (int i = 0; i < colorGroups.Count; i++)
             {
-                text.color = colorData.ColorRGB;
+                if (colorGroups[i].Count == 0)
+                    colorGroups.RemoveAt(i);
             }
         }
 
-        ResetRandomColors(); // Reset random colors back to normal once finished
-    }
+        /// <summary>
+        /// Updates the color groups to random colors.
+        /// </summary>
+        protected void UpdateColorGroupsRandomly()
+        {
+            ResetRandomColors();
 
+            ColorData colorData = null;
+            foreach (List<Text> texts in colorGroups)
+            {
+                colorData = data.CustomRandomColors.GetRandomColor();
+                data.CustomRandomColors.IgnoreColor(colorData.ColorName);
+                foreach (Text text in texts)
+                {
+                    text.color = colorData.ColorRGB;
+                }
+            }
+
+            ResetRandomColors(); // Reset random colors back to normal once finished
+        }
+
+    }
 }
 

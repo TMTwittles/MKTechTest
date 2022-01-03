@@ -1,55 +1,53 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.UI;
 
-public class StopWatch : MonoBehaviour
+namespace MKTechTest.Assets.Scripts
 {
-    private bool active;
-    private bool paused = false;
-    private float timeOffset; // Offset for Time.time to reach 0.0f;
-    private float elapsedTime = 0.0f;
-
-    public float ElapsedTime
+    public class StopWatch : MonoBehaviour
     {
-        get { return elapsedTime; }
-    }
+        private bool active;
+        private bool paused = false;
+        private float timeOffset; // Offset for Time.time to reach 0.0f;
+        private float elapsedTime = 0.0f;
 
-    public void TurnOn()
-    {
-        if (!paused)
-            timeOffset = Time.time;
-        paused = false;
-        active = true;
-    }
-
-    public void Reset()
-    {
-        elapsedTime = 0.0f;
-        timeOffset = 0.0f;
-        active = false;
-        paused = false;
-    }
-
-    public void Pause()
-    {
-        active = false;
-        paused = true;
-    }
-
-    void Update()
-    {
-        if (active)
+        public float ElapsedTime
         {
-            elapsedTime = Time.time - timeOffset;
+            get { return elapsedTime; }
         }
-    }
 
-    public string GetTimeFormatted()
-    {
-        return TimeSpan.FromSeconds(elapsedTime).ToString(@"ss\:ff");
+        public void TurnOn()
+        {
+            if (!paused)
+                timeOffset = Time.time;
+            paused = false;
+            active = true;
+        }
+
+        public void Reset()
+        {
+            elapsedTime = 0.0f;
+            timeOffset = 0.0f;
+            active = false;
+            paused = false;
+        }
+
+        public void Pause()
+        {
+            active = false;
+            paused = true;
+        }
+
+        void Update()
+        {
+            if (active)
+            {
+                elapsedTime = Time.time - timeOffset;
+            }
+        }
+
+        public string GetTimeFormatted()
+        {
+            return TimeSpan.FromSeconds(elapsedTime).ToString(@"ss\:ff");
+        }
     }
 }

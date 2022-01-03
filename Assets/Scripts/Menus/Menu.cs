@@ -1,31 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using MKTechTest.Assets.Scripts.ScriptableObjects;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+namespace MKTechTest.Assets.Scripts.Menus
 {
-    [Header("Menu Attributes")]
-    public MenuID ID;
-
-    [Header("Color Data")]
-    [SerializeField] protected RandomColors visualRandomColors;
-    [SerializeField] protected GameData data;
-
-    /// <summary>
-    /// Resets the random colors data, such that they are shuffled but also ignores
-    /// the background color.
-    /// </summary>
-    protected void ResetRandomColors()
+    public abstract class Menu : MonoBehaviour
     {
-        data.CustomRandomColors.Reset(); // Reset the visual colors
-        // Ignore the color of the background to persist into the new game
-        data.CustomRandomColors.IgnoreColor(GameManager.Instance.BackgroundColorData.ColorName);
-    }
+        [Header("Menu Attributes")]
+        public MenuID ID;
 
-    /// <summary>
-    /// Resets the menu.
-    /// </summary>
-    virtual public void Reset()
-    {
+        [Header("Color Data")]
+        [SerializeField] protected RandomColors visualRandomColors;
+        [SerializeField] protected GameData data;
+
+        /// <summary>
+        /// Resets the random colors data, such that they are shuffled but also ignores
+        /// the background color.
+        /// </summary>
+        protected void ResetRandomColors()
+        {
+            data.CustomRandomColors.Reset(); // Randomise random colors
+            // Ignore the color of the background to persist into the new game
+            data.CustomRandomColors.IgnoreColor(GameManager.Instance.BackgroundColorData.ColorName);
+        }
+
+        /// <summary>
+        /// Resets the menu to initial state.
+        /// </summary>
+        public abstract void Reset();
     }
 }

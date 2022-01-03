@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum MenuID
+namespace MKTechTest.Assets.Scripts.Menus
 {
-    StartMenu,
-    GameMenu,
-    PauseMenu,
-    AccessibilityMenu,
-    ResultsMenu
+    public enum MenuID
+    {
+        StartMenu,
+        GameMenu,
+        PauseMenu,
+        AccessibilityMenu,
+        ResultsMenu
+    }
 }
 
