@@ -1,3 +1,4 @@
+using System;
 using MKTechTest.Assets.Scripts.ScriptableObjects;
 using UnityEngine;
 
@@ -18,9 +19,14 @@ namespace MKTechTest.Assets.Scripts.Menus
         /// </summary>
         protected void ResetRandomColors()
         {
-            data.CustomRandomColors.Reset(); // Randomise random colors
+            data.CustomRandomColors.Reset(); // Randomize random colors
             // Ignore the color of the background to persist into the new game
             data.CustomRandomColors.IgnoreColor(GameManager.Instance.BackgroundColorData.ColorName);
+        }
+
+        protected string GetTimeFormatted(float elapsedTime)
+        {
+            return TimeSpan.FromSeconds(elapsedTime).ToString(@"mm\:ss\:ff");
         }
 
         /// <summary>

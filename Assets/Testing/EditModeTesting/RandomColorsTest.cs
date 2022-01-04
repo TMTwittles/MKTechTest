@@ -16,7 +16,7 @@ namespace MKTechTest.Assets.Testing.EditModeTesting
             List<ColorData> colorList = new List<ColorData>();
             int numColors = 10;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numColors; i++)
             {
                 ColorData colorData = ScriptableObject.CreateInstance<ColorData>();
                 colorData.Init(i.ToString(), true);
@@ -102,7 +102,6 @@ namespace MKTechTest.Assets.Testing.EditModeTesting
 
             List<string> colorsIgnored = new List<string>();
             randomColors.ColorList = colorList;
-            bool colorsReset = true;
 
             for (int i = 0; i < randomColors.NumColors; i++)
             {

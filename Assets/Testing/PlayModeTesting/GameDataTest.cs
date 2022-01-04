@@ -39,6 +39,7 @@ namespace MKTechTest.Assets.Testing.PlayModeTesting
 
             int numOptionsButtons = gameMenu.OptionButtons.Count;
 
+            // iterate through an entire game session and ensure background remains the same.
             for (int i = 0; i < gameManager.GameData.TotalAttempts; i++)
             {
                 gameMenu.GetOptionButton(Random.Range(0, numOptionsButtons)).OnPressed();
@@ -51,6 +52,7 @@ namespace MKTechTest.Assets.Testing.PlayModeTesting
                 }
             }
 
+            // Iterate through each menu and ensure the background color remains the same.
             foreach (Menu menu in canvasController.MenuTypes)
             {
                 gameManager.SetActiveMenu(menu.ID, true);
@@ -65,43 +67,4 @@ namespace MKTechTest.Assets.Testing.PlayModeTesting
             Assert.IsTrue(disableDynamicBackground);
         }
     }
-
-//    [UnityTest]
-//    public Test ResetCustomColors()
-//    {
-//    SceneManager.LoadScene("SampleScene");
-
-//    yield return null;
-
-//    GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-
-//    yield return null;
-
-//    bool colorsReset = true;
-//    Color randomColor = new Color(1.0f, 1.0f, 1.0f);
-
-
-//        foreach (ColorData colorData in gameManager.GameData.CustomRandomColors.ColorList)
-//    {
-//        randomColor.r = Random.Range(0.0f, 1.0f);
-//        randomColor.g = Random.Range(0.0f, 1.0f);
-//        randomColor.b = Random.Range(0.0f, 1.0f);
-
-//        colorData.SetColorRGB(randomColor);
-//    }
-
-//    foreach (ColorData colorData in gameManager.GameData.CustomRandomColors.ColorList)
-//    {
-//    colorData.SetColorRGB(gameManager.GameData.DefaultRandomColors.GetColorData(colorData.ColorName).ColorRGB);
-//    }
-
-//    foreach (ColorData colorData in gameManager.GameData.CustomRandomColors.ColorList)
-//    {
-
-//    }
-
-
-//    Assert.IsTrue(disableDynamicBackground);
-//}
 }

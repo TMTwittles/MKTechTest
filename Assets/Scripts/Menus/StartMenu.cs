@@ -11,11 +11,6 @@ namespace MKTechTest.Assets.Scripts.Menus
         [SerializeField] private Button accessibilityButton;
         [SerializeField] private Button quitButton;
 
-        private String FormattedTime(float timeValue)
-        {
-            return TimeSpan.FromSeconds(timeValue).ToString(@"ss\:ff");
-        }
-
         private void Awake()
         {
             newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });

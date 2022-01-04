@@ -19,11 +19,6 @@ namespace MKTechTest.Assets.Scripts.Menus
         [Header("Game Data")]
         [SerializeField] private PlayerData playerData;
 
-        private String FormattedTime(float timeValue)
-        {
-            return TimeSpan.FromSeconds(timeValue).ToString(@"ss\:ff");
-        }
-
         private void Awake()
         {
             newGameButton.onClick.AddListener(delegate { OnPressNewGame(); });
@@ -50,13 +45,13 @@ namespace MKTechTest.Assets.Scripts.Menus
             numFailedAttempts.text = playerData.FailedAttempts.ToString();
             if (playerData.TotalTime > 0.0f)
             {
-                averageAttemptTime.text = FormattedTime(playerData.TotalTime / playerData.NumAttempts);
+                averageAttemptTime.text = GetTimeFormatted(playerData.TotalTime / playerData.NumAttempts);
             }
             else
             {
-                averageAttemptTime.text = FormattedTime(0.0f);
+                averageAttemptTime.text = GetTimeFormatted(0.0f);
             }
-            totalTime.text = FormattedTime(playerData.TotalTime);
+            totalTime.text = GetTimeFormatted(playerData.TotalTime);
         }
 
         private void OnPressNewGame()

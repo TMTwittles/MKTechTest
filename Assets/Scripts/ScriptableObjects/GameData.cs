@@ -62,6 +62,10 @@ namespace MKTechTest.Assets.Scripts.ScriptableObjects
             customRandomColors.Init();
         }
 
+        /// <summary>
+        /// Initializes the RGB color values of the custom color data, this does not
+        /// affect default color data as those values are never assigned to any text, image or UI element.
+        /// </summary>
         public void InitializeCustomRandomColors()
         {
             foreach (ColorData colorData in customRandomColors.ColorList)

@@ -15,6 +15,10 @@ namespace MKTechTest.Assets.Scripts
             get { return elapsedTime; }
         }
 
+        /// <summary>
+        /// Turns on stop watch.
+        /// If stop watch was paused, stop watch will resume from last time it was paused.
+        /// </summary>
         public void TurnOn()
         {
             if (!paused)
@@ -23,6 +27,9 @@ namespace MKTechTest.Assets.Scripts
             active = true;
         }
 
+        /// <summary>
+        /// Resets stop watch to initial state.
+        /// </summary>
         public void Reset()
         {
             elapsedTime = 0.0f;
@@ -31,13 +38,17 @@ namespace MKTechTest.Assets.Scripts
             paused = false;
         }
 
+        /// <summary>
+        /// Pauses stop watch.
+        /// Call TurnOn() to resume using stopwatch.
+        /// </summary>
         public void Pause()
         {
             active = false;
             paused = true;
         }
 
-        void Update()
+        private void Update()
         {
             if (active)
             {
@@ -45,9 +56,5 @@ namespace MKTechTest.Assets.Scripts
             }
         }
 
-        public string GetTimeFormatted()
-        {
-            return TimeSpan.FromSeconds(elapsedTime).ToString(@"ss\:ff");
-        }
     }
 }

@@ -57,8 +57,6 @@ namespace MKTechTest.Assets.Scripts.Menus
                     text.color = colorData.ColorRGB;
                 }
             }
-
-            ResetRandomColors(); // Reset random colors back to normal once finished
         }
 
     }

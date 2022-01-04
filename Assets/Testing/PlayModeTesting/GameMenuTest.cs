@@ -218,7 +218,7 @@ namespace MKTechTest.Assets.Testing.PlayModeTesting
                 gameMenu.GetOptionButton(Random.Range(0, numOptionButtons)).OnPressed();
             }
 
-            // Total time will have an incredibly small amount of time behind player time, thus testing with an atmost difference.  
+            // Total time will have an incredibly small amount of time behind player time, thus testing with an at most difference.  
             float difference = totalTime - gameManager.PlayerData.TotalTime;
             float atMostDifference = 0.05f;
 

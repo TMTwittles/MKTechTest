@@ -47,7 +47,6 @@ namespace MKTechTest.Assets.Scripts.Menus
         private void Awake()
         {
             pauseButton.onClick.AddListener(delegate {OnPressPause();});
-        
             stopWatch = GetComponent<StopWatch>();
             optionButtonTexts = new Text[optionButtons.Count];
             int iter = 0;
@@ -76,9 +75,9 @@ namespace MKTechTest.Assets.Scripts.Menus
             Shuffle();
         }
 
-        void Update()
+        private void Update()
         {
-            timerText.text = stopWatch.GetTimeFormatted();
+            timerText.text = GetTimeFormatted(stopWatch.ElapsedTime);
         }
 
         private void OnPressPause()
@@ -102,16 +101,16 @@ namespace MKTechTest.Assets.Scripts.Menus
             {
                 ResetRandomColors();
             }
-            randomColorsTextOnly.Reset();
 
-            if (playerData.NumAttempts >= gameData.TotalAttempts - 1)
+            randomColorsTextOnly.Reset();
+            playerData.AddAttempt(successfulAttempt, stopWatch.ElapsedTime);
+
+            if (playerData.NumAttempts >= gameData.TotalAttempts)
             {
-                playerData.AddAttempt(successfulAttempt, stopWatch.ElapsedTime);
-                GameManager.Instance.ShowResults();
+                GameManager.Instance.SetActiveMenu(MenuID.ResultsMenu, false);
             }
             else
             {
-                playerData.AddAttempt(successfulAttempt);
                 Shuffle(); // Randomize the display and option buttons as a selection has been made.
             }
         }

@@ -17,7 +17,7 @@ namespace MKTechTest.Assets.Testing.EditModeTesting
             List<ColorData> defaultColorList = new List<ColorData>();
             int numColors = 10;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numColors; i++)
             {
                 ColorData customColorData = ScriptableObject.CreateInstance<ColorData>();
                 customColorData.Init(i.ToString(), true);
@@ -64,7 +64,7 @@ namespace MKTechTest.Assets.Testing.EditModeTesting
             List<ColorData> defaultColorList = new List<ColorData>();
             int numColors = 10;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numColors; i++)
             {
                 ColorData customColorData = ScriptableObject.CreateInstance<ColorData>();
                 customColorData.Init(i.ToString(), true);

@@ -21,6 +21,5 @@ namespace MKTechTest.Assets.Scripts
         {
             optionButtonPressed.Invoke(textComponent.text);
         }
-    
     }
 }
