@@ -6,7 +6,7 @@ namespace MKTechTest.Assets.Scripts
 {
     public class CanvasController : MonoBehaviour
     {
-
+        [Header("Menu")]
         [SerializeField] private List<Menu> menuTypes;
 
         public List<Menu> MenuTypes

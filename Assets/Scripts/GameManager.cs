@@ -8,7 +8,6 @@ namespace MKTechTest.Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         private static GameManager instance; // static singleton instance
-
         public static GameManager Instance
         {
             get
@@ -26,11 +25,9 @@ namespace MKTechTest.Assets.Scripts
 
         [Header("Game data")] 
         [SerializeField] private GameData data;
-        [SerializeField] private PlayerData playerData;
-
-        public PlayerData PlayerData
+        public ColorData BackgroundColorData
         {
-            get { return playerData; }
+            get { return backgroundColorData; }
         }
 
         public GameData GameData
@@ -38,9 +35,10 @@ namespace MKTechTest.Assets.Scripts
             get { return data; }
         }
 
-        public ColorData BackgroundColorData
+        [SerializeField] private PlayerData playerData;
+        public PlayerData PlayerData
         {
-            get { return backgroundColorData; }
+            get { return playerData; }
         }
 
         private void Awake()
@@ -61,21 +59,6 @@ namespace MKTechTest.Assets.Scripts
             canvasController.InstantiateMenu(MenuID.StartMenu);
         }
 
-        public void ShowResults()
-        {
-            canvasController.DisableMenu(MenuID.GameMenu);
-
-            // Check if result menu has been instantiated, if it is then enable it else instantiate it.
-            if (canvasController.IsMenuInstantiated(MenuID.ResultsMenu))
-            {
-                canvasController.EnableMenu(MenuID.ResultsMenu);
-            }
-            else
-            {
-                canvasController.InstantiateMenu(MenuID.ResultsMenu);
-            }
-        }
-
         private void HandleActiveMenu(bool destroyActiveMenu)
         {
             if (destroyActiveMenu)
@@ -88,11 +71,10 @@ namespace MKTechTest.Assets.Scripts
         /// Instantiates or enables a chosen menu, destroying or deleting the active menu.
         /// </summary>
         /// <param name="newActiveMenuID"> Enum MenuID, ID of the menu to set active </param>
-        /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
+        /// <param name="destroyCurrentMenu"> Bool, whether to destroy or disable the current active menu. </param>
         public void SetActiveMenu(MenuID newActiveMenuID, bool destroyCurrentMenu)
         {
             HandleActiveMenu(destroyCurrentMenu);
-
             if (canvasController.IsMenuInstantiated(newActiveMenuID))
                 canvasController.EnableMenu(newActiveMenuID);
             else
@@ -110,11 +92,10 @@ namespace MKTechTest.Assets.Scripts
         /// <summary>
         /// Instantiates or enables the previously active menu, destroying or deleting the active menu.
         /// </summary>
-        /// <param name="destroyCurrentMenu"> bool, whether to destroy or disable the current active menu. </param>
+        /// <param name="destroyCurrentMenu"> Bool, whether to destroy or disable the current active menu. </param>
         public void GoBack(bool destroyCurrentMenu)
         {
             HandleActiveMenu(destroyCurrentMenu);
-
             MenuID previousMenuID = canvasController.GetPreviousMenuID();
 
             if (canvasController.IsMenuInstantiated(previousMenuID))

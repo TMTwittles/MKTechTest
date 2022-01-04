@@ -145,6 +145,5 @@ namespace MKTechTest.Assets.Scripts.Menus
         {
             GameManager.Instance.GoBack(true);
         }
-
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using MKTechTest.Assets.Scripts.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
